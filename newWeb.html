@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>MadHacks Mini | Spring 2018</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.js'></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Waiting+for+the+Sunrise" rel="stylesheet" type="text/css" />
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.42.0/mapbox-gl.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="node_modules/bulma/css/bulma.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Play" rel="stylesheet">
+    <link rel="shortcut icon" href="images/favicon.png">
+</head>
+
+<body>
+    <div class="wrapper">
+        <!--Header-->
+        <div class="head has-text-centered">
+            <!-- <div id="headerAnim" class="headerAnim"></div> -->
+            <!-- <noscript>
+                <div style="height: 100%; width: 100%; background-color: #000; top: 0; position: absolute; display: block;"></div>
+            </noscript> -->
+            <div class="headerOverlay">
+                <a class="register-button" href="https://madhacks-mini.devpost.com/">Project Submissions</a>
+            </div>
+            <div class="iconOverlay">
+                 <a href="https://www.facebook.com/MadHacksUW/"><i class="fab fa-facebook-square fa-lg"></i></a>
+                 <a href="https://twitter.com/MadHacksUW"><i class="fab fa-twitter-square fa-lg" ></i></a>
+            </div>
+            <div class="headerTopLeft">
+                <img src="./images/madhackMini.png" />
+                <h4>CS 1240 @ University of Wisconsin, Madison</h4>
+                <h4>8:30 am - 10:00 pm, April 7th 2018</h4>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="navbar" id="myNavbar">
+                <a href="#home">Home</a>
+                <a href="#about" onclick="myFunction()">About</a>
+                <a href="#sponsors" onclick="myFunction()">Sponsors</a>
+                <a href="#team" onclick="myFunction()">Team</a>
+                <a href="https://madhacks-2018.typeform.com/to/NI8CP7" onclick="myFunction()">Contact</a>
+                <a href="https://goo.gl/forms/gvPRICDzVvDV9O142" onclick="myFunction()">Volunteer</a>
+                <a href="./index.html">Madhacks Mini 2018</a>
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+        </div>
+
+        <!-- About -->
+        <div class="about columns" id="about">
+            <div class="column about-blurb">
+                <h2>ABOUT MADHACKS</h2>
+                <h4>
+                    <strong>MadHacks</strong> is the University of Wisconsin's twice-annual hackathon, bringing together participants
+                    from all over the US for 24 hours of hacking. Unlike other hackathons, MadHacks is going to be putting
+                    emphasis on the wacky, the original, and the downright impossible!</h4>
+            </div>
+            <div class="column about-blurb-2">
+                <h2>&nbsp;</h2>
+                <h4> This spring, we will be having a 12 hours, beginner-friendly mini-hackathon that give new hackers a glimpse
+                    into what hackathons are like. Although it is a shorter hackathon, we will still be having mentors, workshops
+                    and prizes!</h4>
+            </div>
+            <div class="column twitter">
+                <a class="twitter-timeline" data-width="450" data-height="300" data-theme="dark" data-link-color="#1b95e0" data-chrome="nofooter"
+                    href="https://twitter.com/MadHacksUW?ref_src=twsrc%5Etfw">Tweets by MadHacksUW</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+        </div>
+
+
+
+
+
+
+        <!-- Map -->
+        <div id='map'></div>
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoiY29ubm9yc3RhbXBlciIsImEiOiJjamFpeDM1bXMyMXdrMnFsZTh0dmJmanVxIn0.v2IUgOKPxfRDTlAhaswe0w';
+            var map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/connorstamper/cjaixzmwnacd72ro7a1zdxmmh',
+                center: [-89.40, 43.07],
+                zoom: 13,
+            });
+            var geojson = {
+                type: 'FeatureCollection',
+                features: [{
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [-89.406318, 43.071309]
+                    },
+                    properties: {
+                        title: 'MadHacks',
+                        description: '1210 W Dayton St, Madison, WI 53706'
+                    }
+                }]
+            };
+            // add markers to map
+            geojson.features.forEach(function (marker) {
+
+                // create a HTML element for each feature
+                var el = document.createElement('div');
+                el.className = 'marker';
+
+                // make a marker for each feature and add to the map
+                new mapboxgl.Marker(el)
+                    .setLngLat(marker.geometry.coordinates)
+                    .setPopup(new mapboxgl.Popup({ offset: 25 }) // add popups
+                        .setHTML('<h3>' + marker.properties.title + '</h3><p>' + marker.properties.description + '</p>'))
+                    .addTo(map);
+            });
+            // disable map zoom when using scroll
+            map.scrollZoom.disable();
+            //controls
+            map.addControl(new mapboxgl.NavigationControl());
+        </script>
+
+        <!-- Sponsors -->
+        <div class="sponsors" id="sponsors">
+            <!-- <div class="column"></div> -->
+            <h4 class="is-one-third column sponsor-header">Sponsors</h4>
+            <div class="columns is-multiline">
+                <div class="column">
+                    <a href="https://careers.google.com/"><img src="images/google.png"></a>
+                </div>
+                <div class="column">
+                    <a href="https://careers.mlh.io/"><img src="images/mlh-logo.png"></a>
+                </div>
+
+            </div>
+            <h3>Interested in sponsoring MadHacks? </h3>
+            <h3>
+                <a href="./sponsor.pdf">Check this out</a>
+            </h3>
+        </div>
+
+        <!-- The Team -->
+        <div class="team" id="team">
+            <h2>The Team</h2>
+
+        </div>
+
+
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/88/three.min.js"></script>
+    <script type="text/javascript" src="js/OrbitControls.js"></script>
+
+    <script type="text/javascript" src="js/header_anim.js"></script>
+    <script>
+        //this function is used to scroll back to the top
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+        //function used for the side menu bar
+        function myFunction() {
+            var x = document.getElementById("myNavbar");
+            if (x.className === "navbar") {
+                x.className += " responsive";
+            }
+            else {
+                x.className = "navbar";
+            }
+        }
+    </script>
+</body>
+
+</html>
